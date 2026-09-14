@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  documentacao:
+    name: Documentacao
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verificar links internos da documentacao
+        run: node scripts/check-doc-links.mjs
+
+  aplicacao:
+    name: Aplicacao
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detectar aplicacao
+        id: detectar
+        run: |
+          if [ -f package.json ]; then
+            echo "existe=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "existe=false" >> "$GITHUB_OUTPUT"
+            echo "Ainda nao ha aplicacao neste repositorio. Lint, testes e build serao executados assim que package.json existir." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.detectar.outputs.existe == 'true'
+        with:
+          node-version: '22'
+
+      - name: Instalar dependencias
+        if: steps.detectar.outputs.existe == 'true'
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Lint
+        if: steps.detectar.outputs.existe == 'true'
+        run: npm run lint --if-present
+
+      - name: Testes
+        if: steps.detectar.outputs.existe == 'true'
+        run: npm test --if-present
+
+      - name: Build
+        if: steps.detectar.outputs.existe == 'true'
+        run: npm run build --if-present
