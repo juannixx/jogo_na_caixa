@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Nunito+Sans:ital,opsz,wght@0,6..12,400..800&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:#E3E0DA;font-family:'Nunito Sans',system-ui,sans-serif;color:#454545}
+a{color:#2D6B7D}a:hover{color:#E0812F}
+.dv-turn{padding:40px 44px 32px;scroll-margin-top:16px}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+.dv-tname{font:600 13px/1.2 system-ui,sans-serif;color:#1a1a1a}
+.dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;margin-bottom:48px}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 system-ui,sans-serif;color:rgba(0,0,0,.55)}
+.dv-card{max-width:100%;background:#F1ECE3;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 12px 40px rgba(0,0,0,.08);overflow:hidden;position:relative}
+.dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+.dv-next{margin:22px 0 0;font:12px/1.5 system-ui,sans-serif;color:rgba(0,0,0,.5)}
+.dv-note{margin:0;font:500 11px/1.5 ui-monospace,Menlo,monospace;color:rgba(0,0,0,.55);max-width:560px}
+.dv-row{margin:0 0 14px;font:700 12px/1.2 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(0,0,0,.5)}
+</style>
+</helmet>
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Rodada 1 — Home, Acervo e Ficha do jogo (desktop 1440 + mobile 390) e Biblioteca de componentes</span></div>
+
+<div style="max-width:1100px;background:#fff;border-radius:12px;padding:24px 28px;margin:0 0 40px;display:grid;grid-template-columns:1fr 1fr;gap:20px 40px;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+  <div style="grid-column:1/-1;display:flex;align-items:baseline;gap:14px">
+    <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:22px;text-transform:uppercase;color:#2D6B7D">Premissas desta rodada</span>
+    <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(0,0,0,.5)">brief-claude-design.md · paleta e tipografia aplicadas à letra</span>
+  </div>
+  <ul style="margin:0;padding:0 0 0 18px;font-size:13px;line-height:1.6;display:flex;flex-direction:column;gap:6px">
+    <li><strong>Tipografia:</strong> títulos e preços em Barlow Semi Condensed 700/800 (sans pesada, levemente condensada, caixa alta); corpo em Nunito Sans.</li>
+    <li><strong>Cores:</strong> fundo creme #F1ECE3, cards brancos, header e rodapé em azul petróleo #2D6B7D, ação em laranja #E0812F, selos em verde #3E8E5A e âmbar #B87333.</li>
+    <li><strong>Marca:</strong> o símbolo é uma aproximação em blocos (laranja + petróleo + dado); trocar pelo arquivo oficial.</li>
+  </ul>
+  <ul style="margin:0;padding:0 0 0 18px;font-size:13px;line-height:1.6;display:flex;flex-direction:column;gap:6px">
+    <li><strong>Fotos:</strong> toda área listrada é um espaço de foto 4:3. Arraste a foto real por cima para preencher; ela fica salva.</li>
+    <li><strong>Componentes:</strong> card de jogo, header, rodapé e barra de abas são peças únicas reutilizadas em todas as telas. Editar a peça atualiza todas as instâncias.</li>
+    <li><strong>Elementos fixos ao rolar</strong> (barra de abas, WhatsApp, botão Alugar, coluna da ficha) estão na posição em que ficam, com anotação. Para completar a grade de 4 colunas entraram Carcassonne e Splendor.</li>
+  </ul>
+</div>
+
+<p class="dv-row">Home</p>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a">
+  <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Home · desktop 1440</div>
+  <div class="dv-card" data-screen-label="1a Home desktop" style="width:1440px">
+    <dc-import name="SiteHeader" variant="desktop" active="inicio" hint-size="100%,76px"></dc-import>
+    <section style="position:relative;height:640px;overflow:hidden;background:#2D6B7D">
+      <div style="position:absolute;top:0;bottom:0;left:38%;right:0;background:repeating-linear-gradient(135deg,#D9D0C0 0 14px,#CFC5B3 14px 28px);color:#2D6B7D">
+        <image-slot id="hero-home-d" shape="rect" placeholder="foto real: mesa com jogo montado e gente em volta" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:12px"></image-slot>
+      </div>
+      <div style="position:absolute;inset:0;background:linear-gradient(90deg,#2D6B7D 0%,#2D6B7D 36%,rgba(45,107,125,.88) 47%,rgba(45,107,125,.35) 64%,rgba(45,107,125,.08) 100%);pointer-events:none"></div>
+      <div style="position:relative;max-width:1200px;margin:0 auto;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:26px;pointer-events:none">
+        <h1 style="margin:0;max-width:640px;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:84px;line-height:.95;letter-spacing:.01em;text-transform:uppercase;color:#fff;text-wrap:balance;pointer-events:auto">Mais mesa, menos tela</h1>
+        <p style="margin:0;max-width:540px;font-size:20px;line-height:1.5;color:rgba(255,255,255,.92);text-wrap:pretty;pointer-events:auto">Jogos de tabuleiro pra alugar por 3 ou 7 dias. Você escolhe, reserva sem cadastro e combina a retirada pelo WhatsApp.</p>
+        <div style="display:flex;gap:12px;width:620px;pointer-events:auto">
+          <div style="flex:1;display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;height:56px;padding:0 18px;color:rgba(69,69,69,.6);font-size:16px">
+            <span style="position:relative;width:18px;height:18px;flex:none"><span style="position:absolute;left:0;top:0;width:13px;height:13px;border:2px solid #2D6B7D;border-radius:50%"></span><span style="position:absolute;right:0;bottom:2px;width:7px;height:2px;background:#2D6B7D;transform:rotate(45deg);transform-origin:right center"></span></span>
+            Buscar pelo nome do jogo…
+          </div>
+          <a style="display:inline-flex;align-items:center;justify-content:center;height:56px;padding:0 28px;border-radius:14px;background:#E0812F;color:#fff;font-weight:800;font-size:16px;text-decoration:none;flex:none" style-hover="background:#C9711F">Ver o acervo</a>
+        </div>
+        <div style="display:flex;gap:26px;font-size:14px;font-weight:600;color:rgba(255,255,255,.9);pointer-events:auto">
+          <span style="display:inline-flex;align-items:center;gap:8px"><span style="position:relative;display:block;width:12px;height:12px;border-radius:3px;background:#fff;flex:none"><span style="position:absolute;left:4px;top:4px;width:4px;height:4px;border-radius:50%;background:#2D6B7D"></span></span>Sem cadastro</span>
+          <span style="display:inline-flex;align-items:center;gap:8px"><span style="position:relative;display:block;width:12px;height:12px;border-radius:3px;background:#fff;flex:none"><span style="position:absolute;left:4px;top:4px;width:4px;height:4px;border-radius:50%;background:#2D6B7D"></span></span>Reserva em 1 minuto</span>
+          <span style="display:inline-flex;align-items:center;gap:8px"><span style="position:relative;display:block;width:12px;height:12px;border-radius:3px;background:#fff;flex:none"><span style="position:absolute;left:4px;top:4px;width:4px;height:4px;border-radius:50%;background:#2D6B7D"></span></span>PIX direto no WhatsApp</span>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:1200px;margin:0 auto;padding:72px 0 0">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:40px;line-height:1;letter-spacing:.01em;text-transform:uppercase;color:#2D6B7D">Em destaque</h2>
+          <p style="margin:0;font-size:16px;color:rgba(69,69,69,.75)">Os que mais saem por aqui.</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px">
+          <a style="font-weight:700;font-size:15px;color:#2D6B7D;text-decoration:underline;text-underline-offset:3px">Ver todo o acervo</a>
+          <span style="width:40px;height:40px;border-radius:50%;background:#fff;border:1.5px solid rgba(45,107,125,.2);display:inline-flex;align-items:center;justify-content:center;color:#2D6B7D;font-size:24px;line-height:1;padding-bottom:3px">‹</span>
+          <span style="width:40px;height:40px;border-radius:50%;background:#fff;border:1.5px solid rgba(45,107,125,.2);display:inline-flex;align-items:center;justify-content:center;color:#2D6B7D;font-size:24px;line-height:1;padding-bottom:3px">›</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:20px;overflow:hidden;margin-right:-120px">
+        <div style="flex:0 0 268px"><dc-import name="GameCard" game-name="Azul" players="2–4" duration="45 min" complexity="Leve" price="40" status="available" featured="true" slot-id="azul-home-d" hint-size="268px,400px"></dc-import></div>
+        <div style="flex:0 0 268px"><dc-import name="GameCard" game-name="Catan" players="3–4" duration="90 min" complexity="Média" price="40" status="rented" return-date="18/09" slot-id="catan-home-d" hint-size="268px,400px"></dc-import></div>
+        <div style="flex:0 0 268px"><dc-import name="GameCard" game-name="Dixit" players="3–6" duration="30 min" complexity="Leve" price="30" status="available" slot-id="dixit-home-d" hint-size="268px,400px"></dc-import></div>
+        <div style="flex:0 0 268px"><dc-import name="GameCard" game-name="Ticket to Ride" players="2–5" duration="60 min" complexity="Leve" price="40" status="available" slot-id="ttr-home-d" hint-size="268px,400px"></dc-import></div>
+        <div style="flex:0 0 268px"><dc-import name="GameCard" game-name="7 Wonders Duel" players="2" duration="30 min" complexity="Média" price="30" status="available" slot-id="7wd-home-d" hint-size="268px,400px"></dc-import></div>
+        <div style="flex:0 0 268px"><dc-import name="GameCard" game-name="Codenames" players="2–8" duration="15 min" complexity="Leve" price="30" status="available" slot-id="codenames-home-d" hint-size="268px,400px"></dc-import></div>
+      </div>
+    </section>
+
+    <section style="max-width:1200px;margin:0 auto;padding:72px 0 0">
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:24px">
+        <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:40px;line-height:1;letter-spacing:.01em;text-transform:uppercase;color:#2D6B7D">Pra qual ocasião?</h2>
+        <p style="margin:0;font-size:16px;color:rgba(69,69,69,.75)">Você não precisa saber o nome do jogo. Só quem vai estar na mesa.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+        <a style="position:relative;display:block;height:240px;border-radius:18px;overflow:hidden;background:repeating-linear-gradient(135deg,#D9D0C0 0 12px,#CFC5B3 12px 24px);color:#2D6B7D;text-decoration:none">
+          <image-slot id="occ-2j-d" shape="rect" caption-top="" compact="" placeholder="foto real: casal jogando na mesa da sala" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:11px"></image-slot>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,107,125,0) 42%,rgba(45,107,125,.92) 100%);pointer-events:none"></div>
+          <div style="position:absolute;left:20px;right:20px;bottom:18px;display:flex;flex-direction:column;gap:5px">
+            <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:28px;line-height:1;letter-spacing:.01em;text-transform:uppercase;color:#fff">2 jogadores</span>
+            <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.85)">18 jogos</span>
+          </div>
+        </a>
+        <a style="position:relative;display:block;height:240px;border-radius:18px;overflow:hidden;background:repeating-linear-gradient(135deg,#D9D0C0 0 12px,#CFC5B3 12px 24px);color:#2D6B7D;text-decoration:none">
+          <image-slot id="occ-familia-d" shape="rect" caption-top="" compact="" placeholder="foto real: família com crianças na mesa" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:11px"></image-slot>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,107,125,0) 42%,rgba(45,107,125,.92) 100%);pointer-events:none"></div>
+          <div style="position:absolute;left:20px;right:20px;bottom:18px;display:flex;flex-direction:column;gap:5px">
+            <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:28px;line-height:1;letter-spacing:.01em;text-transform:uppercase;color:#fff">Para a família</span>
+            <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.85)">24 jogos</span>
+          </div>
+        </a>
+        <a style="position:relative;display:block;height:240px;border-radius:18px;overflow:hidden;background:repeating-linear-gradient(135deg,#D9D0C0 0 12px,#CFC5B3 12px 24px);color:#2D6B7D;text-decoration:none">
+          <image-slot id="occ-festa-d" shape="rect" caption-top="" compact="" placeholder="foto real: galera rindo em volta da mesa" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:11px"></image-slot>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,107,125,0) 42%,rgba(45,107,125,.92) 100%);pointer-events:none"></div>
+          <div style="position:absolute;left:20px;right:20px;bottom:18px;display:flex;flex-direction:column;gap:5px">
+            <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:28px;line-height:1;letter-spacing:.01em;text-transform:uppercase;color:#fff">Festa com a galera</span>
+            <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.85)">15 jogos</span>
+          </div>
+        </a>
+        <a style="position:relative;display:block;height:240px;border-radius:18px;overflow:hidden;background:repeating-linear-gradient(135deg,#D9D0C0 0 12px,#CFC5B3 12px 24px);color:#2D6B7D;text-decoration:none">
+          <image-slot id="occ-rapido-d" shape="rect" caption-top="" compact="" placeholder="foto real: partida rápida de cartas" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:11px"></image-slot>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,107,125,0) 42%,rgba(45,107,125,.92) 100%);pointer-events:none"></div>
+          <div style="position:absolute;left:20px;right:20px;bottom:18px;display:flex;flex-direction:column;gap:5px">
+            <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:28px;line-height:1;letter-spacing:.01em;text-transform:uppercase;color:#fff">Rápido, até 30 min</span>
+            <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.85)">22 jogos</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section style="max-width:1200px;margin:0 auto;padding:72px 0 0">
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:24px">
+        <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:40px;line-height:1;letter-spacing:.01em;text-transform:uppercase;color:#2D6B7D">Como funciona</h2>
+        <p style="margin:0;font-size:16px;color:rgba(69,69,69,.75)">Do sofá pra mesa em três passos.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+        <div style="background:#fff;border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 2px rgba(45,107,125,.05),0 8px 24px rgba(45,107,125,.06)">
+          <span style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:14px;background:#2D6B7D;color:#fff;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:26px">1</span>
+          <h3 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:26px;line-height:1;text-transform:uppercase;color:#2D6B7D">Escolha</h3>
+          <p style="margin:0;font-size:16px;line-height:1.6;text-wrap:pretty">Filtre por quantas pessoas vão jogar ou pela ocasião. Dá pra levar até 3 jogos de uma vez.</p>
+        </div>
+        <div style="background:#fff;border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 2px rgba(45,107,125,.05),0 8px 24px rgba(45,107,125,.06)">
+          <span style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:14px;background:#2D6B7D;color:#fff;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:26px">2</span>
+          <h3 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:26px;line-height:1;text-transform:uppercase;color:#2D6B7D">Reserve</h3>
+          <p style="margin:0;font-size:16px;line-height:1.6;text-wrap:pretty">Nome, WhatsApp e a data de retirada. Sem cadastro, sem cartão, sem senha.</p>
+        </div>
+        <div style="background:#fff;border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 2px rgba(45,107,125,.05),0 8px 24px rgba(45,107,125,.06)">
+          <span style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:14px;background:#2D6B7D;color:#fff;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:26px">3</span>
+          <h3 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:26px;line-height:1;text-transform:uppercase;color:#2D6B7D">Retire e jogue</h3>
+          <p style="margin:0;font-size:16px;line-height:1.6;text-wrap:pretty">A gente combina o PIX e a retirada na conversa. Depois é só chamar a galera pra mesa.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:1200px;margin:0 auto;padding:72px 0 80px">
+      <div style="background:#2D6B7D;border-radius:24px;padding:56px 64px;display:flex;align-items:center;justify-content:space-between;gap:48px;color:#fff">
+        <div style="display:flex;flex-direction:column;gap:12px;max-width:640px">
+          <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:44px;line-height:1;letter-spacing:.01em;text-transform:uppercase">Não sabe qual escolher?</h2>
+          <p style="margin:0;font-size:18px;line-height:1.55;color:rgba(255,255,255,.9);text-wrap:pretty">Fala com a gente. Conta quantas pessoas vão jogar e a gente sugere um jogo que combina com a sua mesa.</p>
+        </div>
+        <a style="display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 28px;border-radius:14px;background:#3E8E5A;color:#fff;font-weight:800;font-size:16px;text-decoration:none;flex:none" style-hover="background:#357B4E">
+          <span style="position:relative;width:20px;height:16px;flex:none"><span style="position:absolute;inset:0;border:2px solid #fff;border-radius:8px"></span><span style="position:absolute;left:3px;bottom:-3px;width:6px;height:6px;background:#3E8E5A;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg)"></span></span>
+          Falar no WhatsApp
+        </a>
+      </div>
+    </section>
+    <dc-import name="SiteFooter" variant="desktop" hint-size="100%,300px"></dc-import>
+  </div>
+</div>
+
+<div class="dv-opt" id="1b">
+  <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Home · mobile 390</div>
+  <div class="dv-card" data-screen-label="1b Home mobile" style="width:390px">
+    <dc-import name="SiteHeader" variant="mobile" active="inicio" hint-size="100%,100px"></dc-import>
+    <section style="position:relative;background:#2D6B7D;color:#fff;overflow:hidden;padding:290px 20px 32px">
+      <div style="position:absolute;left:0;right:0;top:0;height:370px;background:repeating-linear-gradient(135deg,#D9D0C0 0 12px,#CFC5B3 12px 24px);color:#2D6B7D">
+        <image-slot id="hero-home-m" shape="rect" placeholder="foto real: mesa com jogo montado e gente em volta" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:11px"></image-slot>
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,107,125,.05) 0%,rgba(45,107,125,.3) 45%,#2D6B7D 100%);pointer-events:none"></div>
+      </div>
+      <div style="position:relative;display:flex;flex-direction:column;gap:16px">
+        <h1 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:54px;line-height:.95;letter-spacing:.01em;text-transform:uppercase;text-wrap:balance">Mais mesa, menos tela</h1>
+        <p style="margin:0;font-size:16px;line-height:1.5;color:rgba(255,255,255,.92);text-wrap:pretty">Jogos de tabuleiro pra alugar por 3 ou 7 dias. Você escolhe, reserva sem cadastro e combina a retirada pelo WhatsApp.</p>
+        <div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;height:52px;padding:0 16px;color:rgba(69,69,69,.6);font-size:15px">
+          <span style="position:relative;width:18px;height:18px;flex:none"><span style="position:absolute;left:0;top:0;width:13px;height:13px;border:2px solid #2D6B7D;border-radius:50%"></span><span style="position:absolute;right:0;bottom:2px;width:7px;height:2px;background:#2D6B7D;transform:rotate(45deg);transform-origin:right center"></span></span>
+          Buscar pelo nome do jogo…
+        </div>
+        <a style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:14px;background:#E0812F;color:#fff;font-weight:800;font-size:16px;text-decoration:none" style-hover="background:#C9711F">Ver o acervo</a>
+        <div style="display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;font-weight:600;color:rgba(255,255,255,.9)">
+          <span style="display:inline-flex;align-items:center;gap:7px"><span style="position:relative;display:block;width:11px;height:11px;border-radius:3px;background:#fff;flex:none"><span style="position:absolute;left:3.5px;top:3.5px;width:4px;height:4px;border-radius:50%;background:#2D6B7D"></span></span>Sem cadastro</span>
+          <span style="display:inline-flex;align-items:center;gap:7px"><span style="position:relative;display:block;width:11px;height:11px;border-radius:3px;background:#fff;flex:none"><span style="position:absolute;left:3.5px;top:3.5px;width:4px;height:4px;border-radius:50%;background:#2D6B7D"></span></span>Reserva em 1 minuto</span>
+          <span style="display:inline-flex;align-items:center;gap:7px"><span style="position:relative;display:block;width:11px;height:11px;border-radius:3px;background:#fff;flex:none"><span style="position:absolute;left:3.5px;top:3.5px;width:4px;height:4px;border-radius:50%;background:#2D6B7D"></span></span>PIX direto no WhatsApp</span>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding:40px 0 0">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:0 20px;margin-bottom:16px">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:32px;line-height:1;text-transform:uppercase;color:#2D6B7D">Em destaque</h2>
+          <p style="margin:0;font-size:14px;color:rgba(69,69,69,.75)">Os que mais saem por aqui.</p>
+        </div>
+        <a style="font-weight:700;font-size:14px;color:#2D6B7D;text-decoration:underline;text-underline-offset:3px;white-space:nowrap">Ver todos</a>
+      </div>
+      <div style="display:flex;gap:12px;overflow:hidden;padding:0 20px">
+        <div style="flex:0 0 250px"><dc-import name="GameCard" game-name="Azul" players="2–4" duration="45 min" complexity="Leve" price="40" status="available" featured="true" slot-id="azul-home-m" hint-size="250px,380px"></dc-import></div>
+        <div style="flex:0 0 250px"><dc-import name="GameCard" game-name="Catan" players="3–4" duration="90 min" complexity="Média" price="40" status="rented" return-date="18/09" slot-id="catan-home-m" hint-size="250px,380px"></dc-import></div>
+        <div style="flex:0 0 250px"><dc-import name="GameCard" game-name="Dixit" players="3–6" duration="30 min" complexity="Leve" price="30" status="available" slot-id="dixit-home-m" hint-size="250px,380px"></dc-import></div>
+      </div>
+    </section>
+
+    <section style="padding:40px 20px 0">
+      <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:16px">
+        <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:32px;line-height:1;text-transform:uppercase;color:#2D6B7D">Pra qual ocasião?</h2>
+        <p style="margin:0;font-size:14px;color:rgba(69,69,69,.75);text-wrap:pretty">Você não precisa saber o nome do jogo. Só quem vai estar na mesa.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+        <a style="position:relative;display:block;height:150px;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(135deg,#D9D0C0 0 10px,#CFC5B3 10px 20px);color:#2D6B7D;text-decoration:none">
+          <image-slot id="occ-2j-m" shape="rect" caption-top="" compact="" placeholder="foto real: casal jogando" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:10px"></image-slot>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,107,125,0) 35%,rgba(45,107,125,.92) 100%);pointer-events:none"></div>
+          <div style="position:absolute;left:14px;right:14px;bottom:12px;display:flex;flex-direction:column;gap:3px">
+            <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:20px;line-height:1;text-transform:uppercase;color:#fff">2 jogadores</span>
+            <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.85)">18 jogos</span>
+          </div>
+        </a>
+        <a style="position:relative;display:block;height:150px;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(135deg,#D9D0C0 0 10px,#CFC5B3 10px 20px);color:#2D6B7D;text-decoration:none">
+          <image-slot id="occ-familia-m" shape="rect" caption-top="" compact="" placeholder="foto real: família na mesa" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:10px"></image-slot>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,107,125,0) 35%,rgba(45,107,125,.92) 100%);pointer-events:none"></div>
+          <div style="position:absolute;left:14px;right:14px;bottom:12px;display:flex;flex-direction:column;gap:3px">
+            <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:20px;line-height:1;text-transform:uppercase;color:#fff">Para a família</span>
+            <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.85)">24 jogos</span>
+          </div>
+        </a>
+        <a style="position:relative;display:block;height:150px;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(135deg,#D9D0C0 0 10px,#CFC5B3 10px 20px);color:#2D6B7D;text-decoration:none">
+          <image-slot id="occ-festa-m" shape="rect" caption-top="" compact="" placeholder="foto real: galera rindo" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:10px"></image-slot>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,107,125,0) 35%,rgba(45,107,125,.92) 100%);pointer-events:none"></div>
+          <div style="position:absolute;left:14px;right:14px;bottom:12px;display:flex;flex-direction:column;gap:3px">
+            <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:20px;line-height:1;text-transform:uppercase;color:#fff">Festa com a galera</span>
+            <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.85)">15 jogos</span>
+          </div>
+        </a>
+        <a style="position:relative;display:block;height:150px;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(135deg,#D9D0C0 0 10px,#CFC5B3 10px 20px);color:#2D6B7D;text-decoration:none">
+          <image-slot id="occ-rapido-m" shape="rect" caption-top="" compact="" placeholder="foto real: partida rápida" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:10px"></image-slot>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,107,125,0) 35%,rgba(45,107,125,.92) 100%);pointer-events:none"></div>
+          <div style="position:absolute;left:14px;right:14px;bottom:12px;display:flex;flex-direction:column;gap:3px">
+            <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:20px;line-height:1;text-transform:uppercase;color:#fff">Rápido, até 30 min</span>
+            <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.85)">22 jogos</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section style="padding:40px 20px 0">
+      <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:16px">
+        <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:32px;line-height:1;text-transform:uppercase;color:#2D6B7D">Como funciona</h2>
+        <p style="margin:0;font-size:14px;color:rgba(69,69,69,.75)">Do sofá pra mesa em três passos.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="background:#fff;border-radius:16px;padding:18px;display:flex;gap:16px;align-items:flex-start;box-shadow:0 1px 2px rgba(45,107,125,.05),0 8px 24px rgba(45,107,125,.06)">
+          <span style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:#2D6B7D;color:#fff;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:22px;flex:none">1</span>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <h3 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:22px;line-height:1;text-transform:uppercase;color:#2D6B7D">Escolha</h3>
+            <p style="margin:0;font-size:15px;line-height:1.55;text-wrap:pretty">Filtre por quantas pessoas vão jogar ou pela ocasião. Dá pra levar até 3 jogos de uma vez.</p>
+          </div>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:18px;display:flex;gap:16px;align-items:flex-start;box-shadow:0 1px 2px rgba(45,107,125,.05),0 8px 24px rgba(45,107,125,.06)">
+          <span style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:#2D6B7D;color:#fff;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:22px;flex:none">2</span>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <h3 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:22px;line-height:1;text-transform:uppercase;color:#2D6B7D">Reserve</h3>
+            <p style="margin:0;font-size:15px;line-height:1.55;text-wrap:pretty">Nome, WhatsApp e a data de retirada. Sem cadastro, sem cartão, sem senha.</p>
+          </div>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:18px;display:flex;gap:16px;align-items:flex-start;box-shadow:0 1px 2px rgba(45,107,125,.05),0 8px 24px rgba(45,107,125,.06)">
+          <span style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:#2D6B7D;color:#fff;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:22px;flex:none">3</span>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <h3 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:22px;line-height:1;text-transform:uppercase;color:#2D6B7D">Retire e jogue</h3>
+            <p style="margin:0;font-size:15px;line-height:1.55;text-wrap:pretty">A gente combina o PIX e a retirada na conversa. Depois é só chamar a galera pra mesa.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding:40px 20px 48px">
+      <div style="background:#2D6B7D;border-radius:20px;padding:28px 24px;display:flex;flex-direction:column;gap:18px;color:#fff">
+        <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:32px;line-height:1;text-transform:uppercase">Não sabe qual escolher?</h2>
+        <p style="margin:0;font-size:15px;line-height:1.55;color:rgba(255,255,255,.9);text-wrap:pretty">Fala com a gente. Conta quantas pessoas vão jogar e a gente sugere um jogo que combina com a sua mesa.</p>
+        <a style="display:flex;align-items:center;justify-content:center;gap:10px;height:52px;border-radius:14px;background:#3E8E5A;color:#fff;font-weight:800;font-size:16px;text-decoration:none" style-hover="background:#357B4E">
+          <span style="position:relative;width:20px;height:16px;flex:none"><span style="position:absolute;inset:0;border:2px solid #fff;border-radius:8px"></span><span style="position:absolute;left:3px;bottom:-3px;width:6px;height:6px;background:#3E8E5A;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg)"></span></span>
+          Falar no WhatsApp
+        </a>
+      </div>
+    </section>
+    <dc-import name="SiteFooter" variant="mobile" hint-size="100%,320px"></dc-import>
+    <dc-import name="TabBar" active="inicio" fab-lift="16" hint-size="100%,84px"></dc-import>
+  </div>
+  <sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><p class="dv-note">Barra de abas e botão de WhatsApp são fixos ao rolar; aqui aparecem na base do artboard.</p></sc-if>
+</div>
+</div>
+
+<p class="dv-row">Acervo</p>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1c">
+  <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Acervo · desktop 1440 · popover de Jogadores aberto</div>
+  <div class="dv-card" data-screen-label="1c Acervo desktop" style="width:1440px">
+    <dc-import name="SiteHeader" variant="desktop" active="acervo" hint-size="100%,76px"></dc-import>
+    <section style="max-width:1200px;margin:0 auto;padding:48px 0 0">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <h1 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:56px;line-height:1;letter-spacing:.01em;text-transform:uppercase;color:#2D6B7D">Acervo</h1>
+          <p style="margin:0;font-size:18px;color:#454545">71 jogos no acervo</p>
+        </div>
+        <p style="margin:0;font-size:14px;color:rgba(69,69,69,.7)">Períodos de 3 ou 7 dias · Até 3 jogos por reserva</p>
+      </div>
+
+      <div style="position:relative;z-index:2;margin-top:28px;background:#fff;border-radius:16px;padding:12px;display:flex;gap:8px;align-items:center;box-shadow:0 1px 2px rgba(45,107,125,.05),0 8px 24px rgba(45,107,125,.06)">
+        <span style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap">Ordenar: Mais alugados<span style="font-size:11px;opacity:.7">▾</span></span>
+        <div style="position:relative">
+          <span style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid #2D6B7D;background:#2D6B7D;color:#fff;font-weight:700;font-size:14px;white-space:nowrap">Jogadores<span style="font-size:11px;opacity:.85">▴</span></span>
+          <sc-if value="{{ showFilterPopover }}" hint-placeholder-val="{{ true }}">
+          <div style="position:absolute;top:calc(100% + 12px);left:0;width:352px;background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(45,107,125,.18),0 0 0 1px rgba(45,107,125,.08);padding:20px;display:flex;flex-direction:column;gap:16px;z-index:5">
+            <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:20px;line-height:1;text-transform:uppercase;color:#2D6B7D">Quantas pessoas vão jogar?</span>
+            <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px">
+              <span style="display:flex;align-items:center;justify-content:center;height:44px;border-radius:12px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:18px">1</span>
+              <span style="display:flex;align-items:center;justify-content:center;height:44px;border-radius:12px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:18px">2</span>
+              <span style="display:flex;align-items:center;justify-content:center;height:44px;border-radius:12px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:18px">3</span>
+              <span style="display:flex;align-items:center;justify-content:center;height:44px;border-radius:12px;border:1.5px solid #E0812F;background:#E0812F;color:#fff;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:18px">4</span>
+              <span style="display:flex;align-items:center;justify-content:center;height:44px;border-radius:12px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:18px">5</span>
+              <span style="display:flex;align-items:center;justify-content:center;height:44px;border-radius:12px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:18px">6+</span>
+            </div>
+            <p style="margin:0;font-size:13px;line-height:1.5;color:rgba(69,69,69,.75)">Mostramos só os jogos que aceitam esse número de pessoas.</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <a style="font-weight:700;font-size:14px;color:#2D6B7D;text-decoration:underline;text-underline-offset:3px">Limpar</a>
+              <a style="display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 22px;border-radius:12px;background:#E0812F;color:#fff;font-weight:800;font-size:14px;text-decoration:none" style-hover="background:#C9711F">Ver 38 jogos</a>
+            </div>
+          </div>
+          </sc-if>
+        </div>
+        <span style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap">Duração<span style="font-size:11px;opacity:.7">▾</span></span>
+        <span style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap">Complexidade<span style="font-size:11px;opacity:.7">▾</span></span>
+        <span style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap">Tags<span style="font-size:11px;opacity:.7">▾</span></span>
+        <span style="display:inline-flex;align-items:center;gap:10px;height:40px;padding:0 6px 0 16px;border-radius:999px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap">Só disponíveis<span style="display:block;width:38px;height:22px;border-radius:999px;background:rgba(45,107,125,.2);padding:3px"><span style="display:block;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2)"></span></span></span>
+        <span style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;border:1.5px dashed rgba(45,107,125,.4);color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap">Mais filtros</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:28px">
+        <dc-import name="GameCard" game-name="Azul" players="2–4" duration="45 min" complexity="Leve" price="40" status="available" slot-id="azul-acervo-d" hint-size="100%,400px"></dc-import>
+        <dc-import name="GameCard" game-name="Catan" players="3–4" duration="90 min" complexity="Média" price="40" status="rented" return-date="18/09" slot-id="catan-acervo-d" hint-size="100%,400px"></dc-import>
+        <dc-import name="GameCard" game-name="Dixit" players="3–6" duration="30 min" complexity="Leve" price="30" status="available" slot-id="dixit-acervo-d" hint-size="100%,400px"></dc-import>
+        <dc-import name="GameCard" game-name="Ticket to Ride" players="2–5" duration="60 min" complexity="Leve" price="40" status="available" slot-id="ttr-acervo-d" hint-size="100%,400px"></dc-import>
+        <dc-import name="GameCard" game-name="7 Wonders Duel" players="2" duration="30 min" complexity="Média" price="30" status="available" slot-id="7wd-acervo-d" hint-size="100%,400px"></dc-import>
+        <dc-import name="GameCard" game-name="Codenames" players="2–8" duration="15 min" complexity="Leve" price="30" status="available" slot-id="codenames-acervo-d" hint-size="100%,400px"></dc-import>
+        <dc-import name="GameCard" game-name="Carcassonne" players="2–5" duration="35 min" complexity="Leve" price="30" status="available" slot-id="carcassonne-acervo-d" hint-size="100%,400px"></dc-import>
+        <dc-import name="GameCard" game-name="Splendor" players="2–4" duration="30 min" complexity="Leve" price="40" status="rented" return-date="22/09" slot-id="splendor-acervo-d" hint-size="100%,400px"></dc-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:48px 0 80px">
+        <span style="font-size:14px;color:rgba(69,69,69,.7)">Mostrando 8 de 71 jogos</span>
+        <a style="display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 28px;border-radius:12px;border:1.5px solid #2D6B7D;color:#2D6B7D;font-weight:800;font-size:15px;text-decoration:none" style-hover="background:rgba(45,107,125,.08)">Carregar mais jogos</a>
+      </div>
+    </section>
+    <dc-import name="SiteFooter" variant="desktop" hint-size="100%,300px"></dc-import>
+  </div>
+  <sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><p class="dv-note">Cada filtro abre um popover ancorado no chip. O chip Jogadores está no estado pressionado; o número 4 está marcado e ainda não aplicado.</p></sc-if>
+</div>
+
+<div class="dv-opt" id="1d">
+  <div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Acervo · mobile 390 · página e folha inferior de filtro</div>
+  <div style="display:flex;gap:20px;align-items:flex-start">
+    <div class="dv-card" data-screen-label="1d Acervo mobile" style="width:390px">
+      <dc-import name="SiteHeader" variant="mobile" active="acervo" hint-size="100%,100px"></dc-import>
+      <section style="padding:24px 20px 0;display:flex;flex-direction:column;gap:6px">
+        <h1 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:40px;line-height:1;text-transform:uppercase;color:#2D6B7D">Acervo</h1>
+        <p style="margin:0;font-size:15px">71 jogos no acervo</p>
+      </section>
+      <div style="display:flex;gap:8px;align-items:center;padding:16px 0 0 16px;overflow:hidden">
+        <span style="display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid #2D6B7D;background:#fff;color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap;flex:none">Jogadores<span style="font-size:11px;opacity:.7">▾</span></span>
+        <span style="width:1px;height:26px;background:rgba(45,107,125,.2);flex:none"></span>
+        <span style="display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid rgba(45,107,125,.25);background:#fff;color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap;flex:none">Ordenar<span style="font-size:11px;opacity:.7">▾</span></span>
+        <span style="display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid rgba(45,107,125,.25);background:#fff;color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap;flex:none">Duração<span style="font-size:11px;opacity:.7">▾</span></span>
+        <span style="display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid rgba(45,107,125,.25);background:#fff;color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap;flex:none">Complexidade<span style="font-size:11px;opacity:.7">▾</span></span>
+        <span style="display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid rgba(45,107,125,.25);background:#fff;color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap;flex:none">Tags<span style="font-size:11px;opacity:.7">▾</span></span>
+        <span style="display:inline-flex;align-items:center;height:44px;padding:0 16px;border-radius:999px;border:1.5px solid rgba(45,107,125,.25);background:#fff;color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap;flex:none">Só disponíveis</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:20px 16px 0">
+        <dc-import name="GameCard" compact="true" game-name="Azul" players="2–4" duration="45 min" complexity="Leve" price="40" status="available" slot-id="azul-acervo-m" hint-size="100%,300px"></dc-import>
+        <dc-import name="GameCard" compact="true" game-name="Catan" players="3–4" duration="90 min" complexity="Média" price="40" status="rented" return-date="18/09" slot-id="catan-acervo-m" hint-size="100%,300px"></dc-import>
+        <dc-import name="GameCard" compact="true" game-name="Dixit" players="3–6" duration="30 min" complexity="Leve" price="30" status="available" slot-id="dixit-acervo-m" hint-size="100%,300px"></dc-import>
+        <dc-import name="GameCard" compact="true" game-name="Ticket to Ride" players="2–5" duration="60 min" complexity="Leve" price="40" status="available" slot-id="ttr-acervo-m" hint-size="100%,300px"></dc-import>
+        <dc-import name="GameCard" compact="true" game-name="7 Wonders Duel" players="2" duration="30 min" complexity="Média" price="30" status="available" slot-id="7wd-acervo-m" hint-size="100%,300px"></dc-import>
+        <dc-import name="GameCard" compact="true" game-name="Codenames" players="2–8" duration="15 min" complexity="Leve" price="30" status="available" slot-id="codenames-acervo-m" hint-size="100%,300px"></dc-import>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:28px 16px 40px;text-align:center">
+        <span style="font-size:13px;color:rgba(69,69,69,.7)">Mostrando 6 de 71 jogos</span>
+        <a style="display:flex;align-items:center;justify-content:center;height:48px;border-radius:12px;border:1.5px solid #2D6B7D;color:#2D6B7D;font-weight:800;font-size:15px;text-decoration:none" style-hover="background:rgba(45,107,125,.08)">Carregar mais jogos</a>
+      </div>
+      <dc-import name="SiteFooter" variant="mobile" hint-size="100%,320px"></dc-import>
+      <dc-import name="TabBar" active="acervo" fab-lift="16" hint-size="100%,84px"></dc-import>
+    </div>
+
+    <div class="dv-card" data-screen-label="1d Acervo mobile — folha de filtro Jogadores" style="width:390px;height:844px">
+      <dc-import name="SiteHeader" variant="mobile" active="acervo" hint-size="100%,100px"></dc-import>
+      <section style="padding:24px 20px 0;display:flex;flex-direction:column;gap:6px">
+        <h1 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:40px;line-height:1;text-transform:uppercase;color:#2D6B7D">Acervo</h1>
+        <p style="margin:0;font-size:15px">71 jogos no acervo</p>
+      </section>
+      <div style="display:flex;gap:8px;align-items:center;padding:16px 0 0 16px;overflow:hidden">
+        <span style="display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid #2D6B7D;background:#2D6B7D;color:#fff;font-weight:700;font-size:14px;white-space:nowrap;flex:none">Jogadores<span style="font-size:11px;opacity:.85">▴</span></span>
+        <span style="width:1px;height:26px;background:rgba(45,107,125,.2);flex:none"></span>
+        <span style="display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid rgba(45,107,125,.25);background:#fff;color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap;flex:none">Ordenar<span style="font-size:11px;opacity:.7">▾</span></span>
+        <span style="display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid rgba(45,107,125,.25);background:#fff;color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap;flex:none">Duração<span style="font-size:11px;opacity:.7">▾</span></span>
+        <span style="display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 16px;border-radius:999px;border:1.5px solid rgba(45,107,125,.25);background:#fff;color:#2D6B7D;font-weight:700;font-size:14px;white-space:nowrap;flex:none">Complexidade<span style="font-size:11px;opacity:.7">▾</span></span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:20px 16px 0">
+        <dc-import name="GameCard" compact="true" game-name="Azul" players="2–4" duration="45 min" complexity="Leve" price="40" status="available" slot-id="azul-sheet-m" hint-size="100%,300px"></dc-import>
+        <dc-import name="GameCard" compact="true" game-name="Catan" players="3–4" duration="90 min" complexity="Média" price="40" status="rented" return-date="18/09" slot-id="catan-sheet-m" hint-size="100%,300px"></dc-import>
+        <dc-import name="GameCard" compact="true" game-name="Dixit" players="3–6" duration="30 min" complexity="Leve" price="30" status="available" slot-id="dixit-sheet-m" hint-size="100%,300px"></dc-import>
+        <dc-import name="GameCard" compact="true" game-name="Ticket to Ride" players="2–5" duration="60 min" complexity="Leve" price="40" status="available" slot-id="ttr-sheet-m" hint-size="100%,300px"></dc-import>
+      </div>
+      <div style="position:absolute;inset:0;background:rgba(36,74,88,.55)"></div>
+      <div style="position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:24px 24px 0 0;padding:10px 20px 10px;display:flex;flex-direction:column;gap:18px;box-shadow:0 -12px 40px rgba(45,107,125,.2)">
+        <span style="align-self:center;width:40px;height:5px;border-radius:999px;background:rgba(45,107,125,.2)"></span>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+          <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:22px;line-height:1;text-transform:uppercase;color:#2D6B7D">Quantas pessoas vão jogar?</h2>
+          <a style="font-weight:700;font-size:14px;color:#2D6B7D;text-decoration:underline;text-underline-offset:3px;flex:none">Fechar</a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px">
+          <span style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:12px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:20px">1</span>
+          <span style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:12px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:20px">2</span>
+          <span style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:12px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:20px">3</span>
+          <span style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:12px;border:1.5px solid #E0812F;background:#E0812F;color:#fff;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:20px">4</span>
+          <span style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:12px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:20px">5</span>
+          <span style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:12px;border:1.5px solid rgba(45,107,125,.25);color:#2D6B7D;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:20px">6+</span>
+        </div>
+        <p style="margin:0;font-size:13px;line-height:1.5;color:rgba(69,69,69,.75)">Mostramos só os jogos que aceitam esse número de pessoas.</p>
+        <div style="display:flex;gap:10px">
+          <a style="flex:1;display:flex;align-items:center;justify-content:center;height:50px;border-radius:12px;border:1.5px solid #2D6B7D;color:#2D6B7D;font-weight:800;font-size:15px;text-decoration:none">Limpar</a>
+          <a style="flex:1.4;display:flex;align-items:center;justify-content:center;height:50px;border-radius:12px;background:#E0812F;color:#fff;font-weight:800;font-size:15px;text-decoration:none" style-hover="background:#C9711F">Ver 38 jogos</a>
+        </div>
+        <div style="display:flex;justify-content:center;padding-top:4px"><span style="width:134px;height:5px;border-radius:999px;background:#1a1a1a"></span></div>
+      </div>
+    </div>
+  </div>
+  <sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><p class="dv-note">Jogadores fica fixo à esquerda da barra; os outros chips rolam. No celular o filtro abre como folha inferior (quadro à direita), nunca modal central.</p></sc-if>
+</div>
+</div>
+
+<p class="dv-row">Ficha do jogo</p>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1e">
+  <div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Ficha do jogo · desktop 1440 · Azul</div>
+  <div class="dv-card" data-screen-label="1e Ficha desktop" style="width:1440px">
+    <dc-import name="SiteHeader" variant="desktop" active="acervo" hint-size="100%,76px"></dc-import>
+    <section style="max-width:1200px;margin:0 auto;padding:28px 0 80px">
+      <div style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:rgba(69,69,69,.7)">
+        <a style="color:#2D6B7D;text-decoration:none;font-weight:700">Acervo</a><span>›</span><span>Azul</span>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:48px;margin-top:20px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:56px;min-width:0">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="position:relative;aspect-ratio:4/3;border-radius:20px;overflow:hidden;background:repeating-linear-gradient(135deg,#EAE3D7 0 14px,#E2DACC 14px 28px);color:#2D6B7D">
+              <image-slot id="ficha-main-d" shape="rect" placeholder="foto real do exemplar montado na mesa" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:13px"></image-slot>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px">
+              <div style="position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#EAE3D7 0 8px,#E2DACC 8px 16px);color:#2D6B7D;outline:2.5px solid #2D6B7D;outline-offset:-2.5px">
+                <image-slot id="ficha-thumb-1-d" shape="rect" compact="" placeholder="exemplar montado" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:10px"></image-slot>
+              </div>
+              <div style="position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#EAE3D7 0 8px,#E2DACC 8px 16px);color:#2D6B7D">
+                <image-slot id="ficha-thumb-2-d" shape="rect" compact="" placeholder="componentes" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:10px"></image-slot>
+              </div>
+              <div style="position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#EAE3D7 0 8px,#E2DACC 8px 16px);color:#2D6B7D">
+                <image-slot id="ficha-thumb-3-d" shape="rect" compact="" placeholder="caixa aberta" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:10px"></image-slot>
+              </div>
+              <div style="position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#EAE3D7 0 8px,#E2DACC 8px 16px);color:#2D6B7D">
+                <image-slot id="ficha-thumb-4-d" shape="rect" compact="" placeholder="detalhe das peças" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:10px"></image-slot>
+              </div>
+              <div style="position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:repeating-linear-gradient(135deg,#EAE3D7 0 8px,#E2DACC 8px 16px);color:#2D6B7D">
+                <image-slot id="ficha-thumb-5-d" shape="rect" compact="" placeholder="mesa cheia" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:10px"></image-slot>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:32px;line-height:1;text-transform:uppercase;color:#2D6B7D">Sobre o jogo</h2>
+            <p style="margin:0;font-size:17px;line-height:1.65;max-width:680px;text-wrap:pretty">Em Azul, cada pessoa é um artesão decorando as paredes do palácio real de Évora com azulejos portugueses. A cada rodada, todo mundo pega peças das fábricas no centro da mesa e vai encaixando padrões no próprio tabuleiro.</p>
+            <p style="margin:0;font-size:17px;line-height:1.65;max-width:680px;text-wrap:pretty">As regras cabem em cinco minutos de explicação, mas cada escolha muda o que sobra pros outros, e é isso que deixa a mesa animada até a última peça. É um dos jogos mais bonitos do acervo e funciona igualmente bem em dupla ou em quatro.</p>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:32px;line-height:1;text-transform:uppercase;color:#2D6B7D">Ficha técnica</h2>
+            <div style="background:#fff;border-radius:18px;padding:8px 28px;display:grid;grid-template-columns:200px minmax(0,1fr);font-size:16px;line-height:1.5">
+              <span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Complexidade</span>
+              <span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12);display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <span style="display:inline-flex;gap:5px">
+                  <span style="position:relative;display:block;width:18px;height:18px;border-radius:5px;background:#2D6B7D"><span style="position:absolute;left:6px;top:6px;width:6px;height:6px;border-radius:50%;background:#fff"></span></span>
+                  <span style="position:relative;display:block;width:18px;height:18px;border-radius:5px;background:#2D6B7D"><span style="position:absolute;left:6px;top:6px;width:6px;height:6px;border-radius:50%;background:#fff"></span></span>
+                  <span style="display:block;width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(45,107,125,.3)"></span>
+                  <span style="display:block;width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(45,107,125,.3)"></span>
+                  <span style="display:block;width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(45,107,125,.3)"></span>
+                </span>
+                <span>Leve · dá pra aprender jogando</span>
+              </span>
+              <span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Jogadores</span><span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12)">2 a 4 pessoas</span>
+              <span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Duração</span><span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12)">30 a 45 min</span>
+              <span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Idade</span><span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12)">A partir de 8 anos</span>
+              <span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Designer</span><span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12)">Michael Kiesling</span>
+              <span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Editora no Brasil</span><span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12)">Galápagos Jogos</span>
+              <span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Categorias</span><span style="padding:16px 0;border-bottom:1px solid rgba(45,107,125,.12)">Abstrato · Família</span>
+              <span style="padding:16px 0;font-weight:700;color:#2D6B7D">Mecânicas</span><span style="padding:16px 0">Coleção de conjuntos · Escolha de peças · Montagem de padrões</span>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:32px;line-height:1;text-transform:uppercase;color:#2D6B7D">Tags</h2>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <a style="display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:999px;background:#fff;border:1.5px solid rgba(45,107,125,.2);color:#2D6B7D;font-weight:700;font-size:14px;text-decoration:none">Bonito na mesa</a>
+              <a style="display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:999px;background:#fff;border:1.5px solid rgba(45,107,125,.2);color:#2D6B7D;font-weight:700;font-size:14px;text-decoration:none">Fácil de ensinar</a>
+              <a style="display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:999px;background:#fff;border:1.5px solid rgba(45,107,125,.2);color:#2D6B7D;font-weight:700;font-size:14px;text-decoration:none">Bom pra casal</a>
+              <a style="display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:999px;background:#fff;border:1.5px solid rgba(45,107,125,.2);color:#2D6B7D;font-weight:700;font-size:14px;text-decoration:none">Pra jogar em família</a>
+              <a style="display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:999px;background:#fff;border:1.5px solid rgba(45,107,125,.2);color:#2D6B7D;font-weight:700;font-size:14px;text-decoration:none">Premiado · Spiel des Jahres 2018</a>
+            </div>
+          </div>
+        </div>
+
+        <aside style="position:sticky;top:24px;background:#fff;border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:20px;box-shadow:0 1px 2px rgba(45,107,125,.05),0 8px 24px rgba(45,107,125,.08)">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span style="display:inline-flex;align-items:center;padding:7px 12px;border-radius:999px;background:#3E8E5A;color:#fff;font-weight:800;font-size:13px;line-height:1">Disponível</span>
+            <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:#F1ECE3;color:#454545;font-weight:700;font-size:13px;line-height:1"><span style="display:block;width:10px;height:10px;border-radius:3px;background:#E0812F"></span>Caixa Média</span>
+          </div>
+          <h1 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:60px;line-height:.95;letter-spacing:.01em;text-transform:uppercase;color:#2D6B7D">Azul</h1>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <span style="display:inline-flex;align-items:center;gap:7px;background:#F1ECE3;color:#454545;font-weight:700;font-size:13px;line-height:1;padding:8px 12px;border-radius:999px"><span style="display:inline-flex;flex:none"><span style="width:9px;height:9px;border-radius:50%;background:#2D6B7D"></span><span style="width:9px;height:9px;border-radius:50%;background:#2D6B7D;opacity:.55;margin-left:-3px"></span></span>2 a 4 jogadores</span>
+            <span style="display:inline-flex;align-items:center;gap:7px;background:#F1ECE3;color:#454545;font-weight:700;font-size:13px;line-height:1;padding:8px 12px;border-radius:999px"><span style="position:relative;width:12px;height:12px;border:1.5px solid #2D6B7D;border-radius:50%;flex:none"><span style="position:absolute;left:50%;top:1px;width:1.5px;height:4.5px;background:#2D6B7D;transform:translateX(-50%)"></span></span>30 a 45 min</span>
+            <span style="display:inline-flex;align-items:center;gap:7px;background:#F1ECE3;color:#454545;font-weight:700;font-size:13px;line-height:1;padding:8px 12px;border-radius:999px">8+</span>
+            <span style="display:inline-flex;align-items:center;gap:7px;background:#F1ECE3;color:#454545;font-weight:700;font-size:13px;line-height:1;padding:8px 12px;border-radius:999px"><span style="position:relative;width:11px;height:11px;border-radius:3px;background:#2D6B7D;flex:none"><span style="position:absolute;left:4px;top:4px;width:3px;height:3px;border-radius:50%;background:#fff"></span></span>Leve</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="border:1.5px solid rgba(45,107,125,.18);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:6px">
+              <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#2D6B7D">7 dias</span>
+              <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:42px;line-height:1;color:#E0812F">R$ 40</span>
+              <span style="font-size:13px;line-height:1.4;color:rgba(69,69,69,.75)">Pega na sexta, devolve na outra sexta.</span>
+            </div>
+            <div style="border:1.5px solid rgba(45,107,125,.18);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:6px">
+              <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#2D6B7D">3 dias</span>
+              <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:42px;line-height:1;color:#E0812F">R$ 30</span>
+              <span style="font-size:13px;line-height:1.4;color:rgba(69,69,69,.75)">Pra uma noite ou um fim de semana.</span>
+            </div>
+          </div>
+          <a style="display:flex;align-items:center;justify-content:center;height:56px;border-radius:14px;background:#E0812F;color:#fff;font-weight:800;font-size:18px;text-decoration:none" style-hover="background:#C9711F">Alugar</a>
+          <p style="margin:0;font-size:13px;line-height:1.5;text-align:center;color:rgba(69,69,69,.75)">Vai pra sua caixa. Você escolhe o período na hora de reservar.<br>Até 3 jogos por reserva · Sem cadastro</p>
+          <div style="border-top:1px solid rgba(45,107,125,.12);padding-top:16px;font-size:14px;line-height:1.5">Dúvida se serve pro seu grupo? <a style="color:#2D6B7D;font-weight:700;text-decoration:underline;text-underline-offset:3px">Fala com a gente no WhatsApp</a></div>
+        </aside>
+      </div>
+    </section>
+    <dc-import name="SiteFooter" variant="desktop" hint-size="100%,300px"></dc-import>
+  </div>
+  <sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><p class="dv-note">Coluna direita fixa ao rolar. A foto principal é do exemplar montado, nunca da arte da caixa.</p></sc-if>
+</div>
+
+<div class="dv-opt" id="1f">
+  <div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>Ficha do jogo · mobile 390</div>
+  <div class="dv-card" data-screen-label="1f Ficha mobile" style="width:390px">
+    <dc-import name="SiteHeader" variant="mobile" active="acervo" hint-size="100%,100px"></dc-import>
+    <div style="display:flex;align-items:center;gap:6px;padding:14px 16px 10px;font-size:14px;font-weight:700;color:#2D6B7D"><span style="font-size:20px;line-height:1">‹</span>Acervo</div>
+    <div style="position:relative;aspect-ratio:4/3;background:repeating-linear-gradient(135deg,#EAE3D7 0 12px,#E2DACC 12px 24px);color:#2D6B7D">
+      <image-slot id="ficha-main-m" shape="rect" placeholder="foto real do exemplar montado na mesa" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:11px"></image-slot>
+    </div>
+    <div style="display:flex;gap:8px;padding:12px 16px 0">
+      <div style="position:relative;flex:1;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#EAE3D7 0 6px,#E2DACC 6px 12px);color:#2D6B7D;outline:2px solid #2D6B7D;outline-offset:-2px"><image-slot id="ficha-thumb-1-m" shape="rect" compact="" placeholder="montado" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:9px"></image-slot></div>
+      <div style="position:relative;flex:1;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#EAE3D7 0 6px,#E2DACC 6px 12px);color:#2D6B7D"><image-slot id="ficha-thumb-2-m" shape="rect" compact="" placeholder="peças" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:9px"></image-slot></div>
+      <div style="position:relative;flex:1;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#EAE3D7 0 6px,#E2DACC 6px 12px);color:#2D6B7D"><image-slot id="ficha-thumb-3-m" shape="rect" compact="" placeholder="caixa" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:9px"></image-slot></div>
+      <div style="position:relative;flex:1;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#EAE3D7 0 6px,#E2DACC 6px 12px);color:#2D6B7D"><image-slot id="ficha-thumb-4-m" shape="rect" compact="" placeholder="detalhe" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:9px"></image-slot></div>
+      <div style="position:relative;flex:1;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#EAE3D7 0 6px,#E2DACC 6px 12px);color:#2D6B7D"><image-slot id="ficha-thumb-5-m" shape="rect" compact="" placeholder="mesa" style="position:absolute;inset:0;width:100%;height:100%;font-family:ui-monospace,Menlo,monospace;font-size:9px"></image-slot></div>
+    </div>
+
+    <div style="margin:16px 16px 0;background:#fff;border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 2px rgba(45,107,125,.05),0 8px 24px rgba(45,107,125,.08)">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="display:inline-flex;align-items:center;padding:7px 12px;border-radius:999px;background:#3E8E5A;color:#fff;font-weight:800;font-size:12px;line-height:1">Disponível</span>
+        <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:#F1ECE3;color:#454545;font-weight:700;font-size:12px;line-height:1"><span style="display:block;width:10px;height:10px;border-radius:3px;background:#E0812F"></span>Caixa Média</span>
+      </div>
+      <h1 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:44px;line-height:.95;letter-spacing:.01em;text-transform:uppercase;color:#2D6B7D">Azul</h1>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        <span style="display:inline-flex;align-items:center;gap:6px;background:#F1ECE3;color:#454545;font-weight:700;font-size:12px;line-height:1;padding:7px 10px;border-radius:999px"><span style="display:inline-flex;flex:none"><span style="width:8px;height:8px;border-radius:50%;background:#2D6B7D"></span><span style="width:8px;height:8px;border-radius:50%;background:#2D6B7D;opacity:.55;margin-left:-3px"></span></span>2 a 4 jogadores</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;background:#F1ECE3;color:#454545;font-weight:700;font-size:12px;line-height:1;padding:7px 10px;border-radius:999px"><span style="position:relative;width:11px;height:11px;border:1.5px solid #2D6B7D;border-radius:50%;flex:none"><span style="position:absolute;left:50%;top:1px;width:1.5px;height:4px;background:#2D6B7D;transform:translateX(-50%)"></span></span>30 a 45 min</span>
+        <span style="display:inline-flex;align-items:center;background:#F1ECE3;color:#454545;font-weight:700;font-size:12px;line-height:1;padding:7px 10px;border-radius:999px">8+</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;background:#F1ECE3;color:#454545;font-weight:700;font-size:12px;line-height:1;padding:7px 10px;border-radius:999px"><span style="position:relative;width:10px;height:10px;border-radius:3px;background:#2D6B7D;flex:none"><span style="position:absolute;left:3.5px;top:3.5px;width:3px;height:3px;border-radius:50%;background:#fff"></span></span>Leve</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="border:1.5px solid rgba(45,107,125,.18);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:5px">
+          <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#2D6B7D">7 dias</span>
+          <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:34px;line-height:1;color:#E0812F">R$ 40</span>
+          <span style="font-size:12px;line-height:1.4;color:rgba(69,69,69,.75)">Pega na sexta, devolve na outra sexta.</span>
+        </div>
+        <div style="border:1.5px solid rgba(45,107,125,.18);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:5px">
+          <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#2D6B7D">3 dias</span>
+          <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:34px;line-height:1;color:#E0812F">R$ 30</span>
+          <span style="font-size:12px;line-height:1.4;color:rgba(69,69,69,.75)">Pra uma noite ou um fim de semana.</span>
+        </div>
+      </div>
+      <p style="margin:0;font-size:13px;line-height:1.5;color:rgba(69,69,69,.75)">Você escolhe o período na hora de reservar. Até 3 jogos por reserva, sem cadastro.</p>
+    </div>
+
+    <section style="padding:32px 16px 0;display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:26px;line-height:1;text-transform:uppercase;color:#2D6B7D">Sobre o jogo</h2>
+      <p style="margin:0;font-size:15px;line-height:1.65;text-wrap:pretty">Em Azul, cada pessoa é um artesão decorando as paredes do palácio real de Évora com azulejos portugueses. A cada rodada, todo mundo pega peças das fábricas no centro da mesa e vai encaixando padrões no próprio tabuleiro.</p>
+      <p style="margin:0;font-size:15px;line-height:1.65;text-wrap:pretty">As regras cabem em cinco minutos de explicação, mas cada escolha muda o que sobra pros outros, e é isso que deixa a mesa animada até a última peça.</p>
+    </section>
+
+    <section style="padding:32px 16px 0;display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:26px;line-height:1;text-transform:uppercase;color:#2D6B7D">Ficha técnica</h2>
+      <div style="background:#fff;border-radius:16px;padding:4px 18px;display:grid;grid-template-columns:118px minmax(0,1fr);font-size:14px;line-height:1.5">
+        <span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Complexidade</span>
+        <span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="display:inline-flex;gap:4px">
+            <span style="position:relative;display:block;width:15px;height:15px;border-radius:4px;background:#2D6B7D"><span style="position:absolute;left:5px;top:5px;width:5px;height:5px;border-radius:50%;background:#fff"></span></span>
+            <span style="position:relative;display:block;width:15px;height:15px;border-radius:4px;background:#2D6B7D"><span style="position:absolute;left:5px;top:5px;width:5px;height:5px;border-radius:50%;background:#fff"></span></span>
+            <span style="display:block;width:15px;height:15px;border-radius:4px;border:1.5px solid rgba(45,107,125,.3)"></span>
+            <span style="display:block;width:15px;height:15px;border-radius:4px;border:1.5px solid rgba(45,107,125,.3)"></span>
+            <span style="display:block;width:15px;height:15px;border-radius:4px;border:1.5px solid rgba(45,107,125,.3)"></span>
+          </span>
+          <span>Leve</span>
+        </span>
+        <span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Jogadores</span><span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12)">2 a 4 pessoas</span>
+        <span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Duração</span><span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12)">30 a 45 min</span>
+        <span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Idade</span><span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12)">A partir de 8 anos</span>
+        <span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Designer</span><span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12)">Michael Kiesling</span>
+        <span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Editora</span><span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12)">Galápagos Jogos</span>
+        <span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12);font-weight:700;color:#2D6B7D">Categorias</span><span style="padding:12px 0;border-bottom:1px solid rgba(45,107,125,.12)">Abstrato · Família</span>
+        <span style="padding:12px 0;font-weight:700;color:#2D6B7D">Mecânicas</span><span style="padding:12px 0">Coleção de conjuntos · Escolha de peças · Montagem de padrões</span>
+      </div>
+    </section>
+
+    <section style="padding:32px 16px 40px;display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:26px;line-height:1;text-transform:uppercase;color:#2D6B7D">Tags</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <a style="display:inline-flex;align-items:center;height:40px;padding:0 14px;border-radius:999px;background:#fff;border:1.5px solid rgba(45,107,125,.2);color:#2D6B7D;font-weight:700;font-size:13px;text-decoration:none">Bonito na mesa</a>
+        <a style="display:inline-flex;align-items:center;height:40px;padding:0 14px;border-radius:999px;background:#fff;border:1.5px solid rgba(45,107,125,.2);color:#2D6B7D;font-weight:700;font-size:13px;text-decoration:none">Fácil de ensinar</a>
+        <a style="display:inline-flex;align-items:center;height:40px;padding:0 14px;border-radius:999px;background:#fff;border:1.5px solid rgba(45,107,125,.2);color:#2D6B7D;font-weight:700;font-size:13px;text-decoration:none">Bom pra casal</a>
+        <a style="display:inline-flex;align-items:center;height:40px;padding:0 14px;border-radius:999px;background:#fff;border:1.5px solid rgba(45,107,125,.2);color:#2D6B7D;font-weight:700;font-size:13px;text-decoration:none">Pra jogar em família</a>
+        <a style="display:inline-flex;align-items:center;height:40px;padding:0 14px;border-radius:999px;background:#fff;border:1.5px solid rgba(45,107,125,.2);color:#2D6B7D;font-weight:700;font-size:13px;text-decoration:none">Premiado · Spiel des Jahres 2018</a>
+      </div>
+    </section>
+    <dc-import name="SiteFooter" variant="mobile" hint-size="100%,320px"></dc-import>
+    <div style="background:#fff;border-top:1px solid rgba(45,107,125,.12);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 -8px 24px rgba(45,107,125,.08);position:relative;z-index:2">
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="display:flex;align-items:baseline;gap:6px"><span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:26px;line-height:1;color:#E0812F">R$ 40</span><span style="font-size:12px;font-weight:600;color:rgba(69,69,69,.7)">por 7 dias</span></span>
+        <span style="font-size:12px;color:rgba(69,69,69,.7)">ou R$ 30 por 3 dias</span>
+      </div>
+      <a style="display:flex;align-items:center;justify-content:center;height:50px;min-width:150px;padding:0 24px;border-radius:14px;background:#E0812F;color:#fff;font-weight:800;font-size:16px;text-decoration:none" style-hover="background:#C9711F">Alugar</a>
+    </div>
+    <dc-import name="TabBar" active="acervo" fab-lift="88" hint-size="100%,84px"></dc-import>
+  </div>
+  <sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}"><p class="dv-note">O bloco de preço + Alugar gruda no rodapé ao rolar, acima da barra de abas; o WhatsApp flutua acima dele.</p></sc-if>
+</div>
+</div>
+
+<p class="dv-row">Biblioteca</p>
+<div class="dv-opts">
+<div class="dv-opt" id="1g">
+  <div class="dv-olabel"><a class="dv-oid" href="#1g">1g</a>Biblioteca de componentes</div>
+  <div class="dv-card" data-screen-label="1g Biblioteca" style="width:1440px;padding:48px 56px 56px;display:flex;flex-direction:column;gap:52px">
+    <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap">
+      <h1 style="margin:0;font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:36px;line-height:1;text-transform:uppercase;color:#2D6B7D">Biblioteca de componentes</h1>
+      <span style="font:500 12px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">card de jogo · pílulas · selos · botões · estilos</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <span style="font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(69,69,69,.55)">Card de jogo — 3 estados + variante compacta</span>
+      <div style="display:flex;gap:28px;align-items:flex-start">
+        <div style="display:flex;flex-direction:column;gap:10px;width:280px">
+          <dc-import name="GameCard" game-name="Azul" players="2–4" duration="45 min" complexity="Leve" price="40" status="available" slot-id="azul-lib" hint-size="280px,400px"></dc-import>
+          <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">disponível · selo verde · botão Alugar</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;width:280px">
+          <dc-import name="GameCard" game-name="Catan" players="3–4" duration="90 min" complexity="Média" price="40" status="rented" return-date="18/09" slot-id="catan-lib" hint-size="280px,400px"></dc-import>
+          <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">alugado · selo âmbar com data de retorno · botão Avise-me</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;width:280px">
+          <dc-import name="GameCard" game-name="Dixit" players="3–6" duration="30 min" complexity="Leve" price="30" status="available" featured="true" slot-id="dixit-lib" hint-size="280px,400px"></dc-import>
+          <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">em destaque · etiqueta laranja no canto direito</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;width:175px">
+          <dc-import name="GameCard" compact="true" game-name="Ticket to Ride" players="2–5" duration="60 min" complexity="Leve" price="40" status="available" slot-id="ttr-lib" hint-size="175px,300px"></dc-import>
+          <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">compacto · grade mobile de 2 colunas</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:80px;align-items:flex-start;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <span style="font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(69,69,69,.55)">Pílula de atributo</span>
+        <div style="display:flex;gap:28px;align-items:flex-start">
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <span style="display:inline-flex;align-items:center;gap:7px;background:#fff;color:#454545;font-weight:700;font-size:13px;line-height:1;padding:8px 12px;border-radius:999px;box-shadow:0 1px 2px rgba(45,107,125,.08)"><span style="display:inline-flex;flex:none"><span style="width:9px;height:9px;border-radius:50%;background:#2D6B7D"></span><span style="width:9px;height:9px;border-radius:50%;background:#2D6B7D;opacity:.55;margin-left:-3px"></span></span>2 a 4 jogadores</span>
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">jogadores</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <span style="display:inline-flex;align-items:center;gap:7px;background:#fff;color:#454545;font-weight:700;font-size:13px;line-height:1;padding:8px 12px;border-radius:999px;box-shadow:0 1px 2px rgba(45,107,125,.08)"><span style="position:relative;width:12px;height:12px;border:1.5px solid #2D6B7D;border-radius:50%;flex:none"><span style="position:absolute;left:50%;top:1px;width:1.5px;height:4.5px;background:#2D6B7D;transform:translateX(-50%)"></span></span>45 min</span>
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">duração</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <span style="display:inline-flex;align-items:center;gap:7px;background:#fff;color:#454545;font-weight:700;font-size:13px;line-height:1;padding:8px 12px;border-radius:999px;box-shadow:0 1px 2px rgba(45,107,125,.08)"><span style="position:relative;width:11px;height:11px;border-radius:3px;background:#2D6B7D;flex:none"><span style="position:absolute;left:4px;top:4px;width:3px;height:3px;border-radius:50%;background:#fff"></span></span>Leve</span>
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">complexidade</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <span style="display:inline-flex;align-items:center;background:#fff;color:#454545;font-weight:700;font-size:13px;line-height:1;padding:8px 12px;border-radius:999px;box-shadow:0 1px 2px rgba(45,107,125,.08)">8+</span>
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">idade</span>
+          </div>
+        </div>
+        <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">dentro do card branco a pílula fica creme (#F1ECE3); sobre o creme, fica branca.</span>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <span style="font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(69,69,69,.55)">Marcador de complexidade (1 a 5 dados)</span>
+        <div style="display:flex;gap:32px;align-items:flex-start">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="display:inline-flex;gap:5px">
+              <span style="position:relative;display:block;width:18px;height:18px;border-radius:5px;background:#2D6B7D"><span style="position:absolute;left:6px;top:6px;width:6px;height:6px;border-radius:50%;background:#fff"></span></span>
+              <span style="position:relative;display:block;width:18px;height:18px;border-radius:5px;background:#2D6B7D"><span style="position:absolute;left:6px;top:6px;width:6px;height:6px;border-radius:50%;background:#fff"></span></span>
+              <span style="display:block;width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(45,107,125,.3)"></span>
+              <span style="display:block;width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(45,107,125,.3)"></span>
+              <span style="display:block;width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(45,107,125,.3)"></span>
+            </span>
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">Leve · 2 de 5</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="display:inline-flex;gap:5px">
+              <span style="position:relative;display:block;width:18px;height:18px;border-radius:5px;background:#2D6B7D"><span style="position:absolute;left:6px;top:6px;width:6px;height:6px;border-radius:50%;background:#fff"></span></span>
+              <span style="position:relative;display:block;width:18px;height:18px;border-radius:5px;background:#2D6B7D"><span style="position:absolute;left:6px;top:6px;width:6px;height:6px;border-radius:50%;background:#fff"></span></span>
+              <span style="position:relative;display:block;width:18px;height:18px;border-radius:5px;background:#2D6B7D"><span style="position:absolute;left:6px;top:6px;width:6px;height:6px;border-radius:50%;background:#fff"></span></span>
+              <span style="display:block;width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(45,107,125,.3)"></span>
+              <span style="display:block;width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(45,107,125,.3)"></span>
+            </span>
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">Média · 3 de 5</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="display:inline-flex;gap:5px">
+              <span style="position:relative;display:block;width:18px;height:18px;border-radius:5px;background:#2D6B7D"><span style="position:absolute;left:6px;top:6px;width:6px;height:6px;border-radius:50%;background:#fff"></span></span>
+              <span style="position:relative;display:block;width:18px;height:18px;border-radius:5px;background:#2D6B7D"><span style="position:absolute;left:6px;top:6px;width:6px;height:6px;border-radius:50%;background:#fff"></span></span>
+              <span style="position:relative;display:block;width:18px;height:18px;border-radius:5px;background:#2D6B7D"><span style="position:absolute;left:6px;top:6px;width:6px;height:6px;border-radius:50%;background:#fff"></span></span>
+              <span style="position:relative;display:block;width:18px;height:18px;border-radius:5px;background:#2D6B7D"><span style="position:absolute;left:6px;top:6px;width:6px;height:6px;border-radius:50%;background:#fff"></span></span>
+              <span style="position:relative;display:block;width:18px;height:18px;border-radius:5px;background:#2D6B7D"><span style="position:absolute;left:6px;top:6px;width:6px;height:6px;border-radius:50%;background:#fff"></span></span>
+            </span>
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">Pesada · 5 de 5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:80px;align-items:flex-start;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <span style="font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(69,69,69,.55)">Selo de status</span>
+        <div style="display:flex;gap:28px;align-items:flex-start">
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <span style="display:inline-flex;align-items:center;padding:7px 12px;border-radius:999px;background:#3E8E5A;color:#fff;font-weight:800;font-size:13px;line-height:1">Disponível</span>
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">disponível · verde #3E8E5A</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <span style="display:inline-flex;align-items:center;padding:7px 12px;border-radius:999px;background:#B87333;color:#fff;font-weight:800;font-size:13px;line-height:1">Volta 18/09</span>
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">alugado · âmbar #B87333 · data DD/MM</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <span style="display:inline-flex;align-items:center;padding:7px 12px;border-radius:999px;background:#8A857E;color:#fff;font-weight:800;font-size:13px;line-height:1">Em manutenção</span>
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">manutenção · cinza #8A857E</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <span style="font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(69,69,69,.55)">Botão</span>
+        <div style="display:flex;gap:28px;align-items:flex-start">
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <a style="display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 24px;border-radius:12px;background:#E0812F;color:#fff;font-weight:800;font-size:15px;text-decoration:none" style-hover="background:#C9711F">Alugar</a>
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">primário · laranja #E0812F</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <a style="display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 24px;border-radius:12px;border:1.5px solid #2D6B7D;color:#2D6B7D;font-weight:800;font-size:15px;text-decoration:none" style-hover="background:rgba(45,107,125,.08)">Avise-me</a>
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">secundário · contorno petróleo</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <a style="display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 24px;border-radius:12px;background:#3E8E5A;color:#fff;font-weight:800;font-size:15px;text-decoration:none" style-hover="background:#357B4E">
+              <span style="position:relative;width:20px;height:16px;flex:none"><span style="position:absolute;inset:0;border:2px solid #fff;border-radius:8px"></span><span style="position:absolute;left:3px;bottom:-3px;width:6px;height:6px;background:#3E8E5A;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg)"></span></span>
+              Falar no WhatsApp
+            </a>
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">WhatsApp · verde #3E8E5A</span>
+          </div>
+        </div>
+        <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6)">altura 48 no site e 40 dentro do card; 56 no Alugar da ficha. Alvo de toque mínimo 44.</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <span style="font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(69,69,69,.55)">Estilos — paleta e tipografia do brief</span>
+      <div style="display:flex;gap:56px;align-items:flex-start;flex-wrap:wrap">
+        <div style="display:flex;gap:12px">
+          <div style="display:flex;flex-direction:column;gap:8px;width:104px"><span style="display:block;height:64px;border-radius:12px;background:#E0812F"></span><span style="font-size:12px;font-weight:700;color:#2D6B7D">Laranja</span><span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6);margin-top:-6px">#E0812F · ação</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px;width:104px"><span style="display:block;height:64px;border-radius:12px;background:#2D6B7D"></span><span style="font-size:12px;font-weight:700;color:#2D6B7D">Azul petróleo</span><span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6);margin-top:-6px">#2D6B7D · estrutura</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px;width:104px"><span style="display:block;height:64px;border-radius:12px;background:#F1ECE3;border:1px solid rgba(45,107,125,.15)"></span><span style="font-size:12px;font-weight:700;color:#2D6B7D">Creme</span><span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6);margin-top:-6px">#F1ECE3 · fundo</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px;width:104px"><span style="display:block;height:64px;border-radius:12px;background:#FFFFFF;border:1px solid rgba(45,107,125,.15)"></span><span style="font-size:12px;font-weight:700;color:#2D6B7D">Branco</span><span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6);margin-top:-6px">#FFFFFF · superfície</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px;width:104px"><span style="display:block;height:64px;border-radius:12px;background:#454545"></span><span style="font-size:12px;font-weight:700;color:#2D6B7D">Grafite</span><span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6);margin-top:-6px">#454545 · texto</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px;width:104px"><span style="display:block;height:64px;border-radius:12px;background:#3E8E5A"></span><span style="font-size:12px;font-weight:700;color:#2D6B7D">Verde</span><span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6);margin-top:-6px">#3E8E5A · disponível</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px;width:104px"><span style="display:block;height:64px;border-radius:12px;background:#B87333"></span><span style="font-size:12px;font-weight:700;color:#2D6B7D">Âmbar</span><span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6);margin-top:-6px">#B87333 · indisponível</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;background:#fff;border-radius:16px;padding:20px 24px;min-width:420px">
+          <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:40px;line-height:1;text-transform:uppercase;color:#2D6B7D">Mais mesa, menos tela</span>
+          <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6);margin-top:-6px">Título · Barlow Semi Condensed 800 · caixa alta</span>
+          <span style="font-size:16px;line-height:1.6">Jogos de tabuleiro pra alugar por 3 ou 7 dias. Você escolhe, reserva sem cadastro e combina a retirada pelo WhatsApp.</span>
+          <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6);margin-top:-6px">Corpo · Nunito Sans 400 · entrelinha 1,6</span>
+          <span style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:44px;line-height:1;color:#E0812F">R$ 40</span><span style="font-size:14px;font-weight:600;color:rgba(69,69,69,.7)">por 7 dias</span></span>
+          <span style="font:500 11px ui-monospace,Menlo,monospace;color:rgba(69,69,69,.6);margin-top:-6px">Preço · Barlow Semi Condensed 800 · laranja · sem centavos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<p class="dv-next">Próximos passos possíveis: "arraste as fotos reais nos espaços listrados" · "monte o Carrinho e a Reserva no mesmo padrão" · "quero ver o card com o preço em petróleo em vez de laranja" · "variações do hero da Home"</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showNotes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Canvas&quot;},&quot;showFilterPopover&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Acervo desktop&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props, on = v => v === undefined || v === null || v === true || v === 'true';
+    return { showNotes: on(p.showNotes), showFilterPopover: on(p.showFilterPopover) };
+  }
+}
+</script>
+</body>
+</html>
