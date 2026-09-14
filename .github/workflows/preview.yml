@@ -1,0 +1,79 @@
+name: Preview
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    name: Publicar preview
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Montar o preview
+        run: node scripts/montar-preview.mjs
+
+      - name: Publicar preview do pull request
+        if: github.event_name == 'pull_request'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          destination_dir: pr-${{ github.event.number }}
+          keep_files: true
+          commit_message: "preview do PR #${{ github.event.number }}"
+
+      - name: Publicar versao principal
+        if: github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          keep_files: true
+          commit_message: "preview de ${{ github.sha }}"
+
+      - name: Comentar a URL no pull request
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = `https://${context.repo.owner}.github.io/${context.repo.repo}/pr-${context.issue.number}/`
+            const marcador = '<!-- preview-do-design -->'
+            const corpo = `${marcador}\n### Preview do design\n\n${url}\n\nOs artboards de Home, Acervo e Ficha do jogo, em desktop e mobile, mais a biblioteca de componentes. Atualiza a cada push nesta branch.`
+
+            const comentarios = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            })
+            const existente = comentarios.data.find((c) => c.body.includes(marcador))
+
+            if (existente) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existente.id,
+                body: corpo,
+              })
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: corpo,
+              })
+            }
