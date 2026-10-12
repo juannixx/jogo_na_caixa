@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Nunito+Sans:ital,opsz,wght@0,6..12,400..800&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0;background:#F1ECE3}a{color:#2D6B7D}a:hover{color:#E0812F}</style>
+</helmet>
+<sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+<footer style="background:#2D6B7D;color:#fff;font-family:'Nunito Sans',sans-serif">
+  <div style="max-width:1200px;margin:0 auto;padding:56px 0 28px;display:flex;flex-direction:column;gap:40px">
+    <div style="display:flex;justify-content:space-between;gap:48px">
+      <div style="max-width:380px;display:flex;flex-direction:column;gap:16px">
+        <span style="display:flex;align-items:center;gap:12px">
+          <span style="position:relative;display:block;width:40px;height:40px;border-radius:10px;background:#F1ECE3;flex:none">
+            <span style="position:absolute;left:8px;bottom:7px;width:11px;height:17px;background:#E0812F;border-radius:3px 0 0 3px"></span>
+            <span style="position:absolute;left:19px;bottom:7px;width:13px;height:12px;background:#2D6B7D;border-radius:0 3px 3px 0"></span>
+            <span style="position:absolute;left:15px;top:6px;width:14px;height:14px;background:#fff;border-radius:3.5px;box-shadow:0 1px 2px rgba(0,0,0,.25)"></span>
+            <span style="position:absolute;left:20.5px;top:11.5px;width:3px;height:3px;border-radius:50%;background:#2D6B7D"></span>
+          </span>
+          <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:22px;letter-spacing:.06em;line-height:1">JOGO NA CAIXA</span>
+        </span>
+        <p style="margin:0;font-size:15px;line-height:1.6;color:rgba(255,255,255,.85)">Locadora de jogos de tabuleiro. Você escolhe no site, a gente combina tudo pelo WhatsApp.</p>
+      </div>
+      <div style="display:flex;gap:80px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65)">Navegar</span>
+          <a style="color:#fff;font-weight:600;font-size:15px;text-decoration:none">Acervo</a>
+          <a style="color:#fff;font-weight:600;font-size:15px;text-decoration:none">Como funciona</a>
+          <a style="color:#fff;font-weight:600;font-size:15px;text-decoration:none">Contato</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65)">Falar com a gente</span>
+          <a style="color:#fff;font-weight:600;font-size:15px;text-decoration:none">WhatsApp</a>
+          <a style="color:#fff;font-weight:600;font-size:15px;text-decoration:none">Instagram</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65)">Combinados</span>
+          <span style="font-size:15px;color:rgba(255,255,255,.85)">Períodos de 3 ou 7 dias</span>
+          <span style="font-size:15px;color:rgba(255,255,255,.85)">Até 3 jogos por reserva</span>
+          <span style="font-size:15px;color:rgba(255,255,255,.85)">Pagamento por PIX</span>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.18);padding-top:20px;display:flex;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.7)">
+      <span>© 2026 Jogo na Caixa</span>
+      <span>Feito pra tirar a noite da tela e pôr na mesa.</span>
+    </div>
+  </div>
+</footer>
+</sc-if>
+<sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+<footer style="background:#2D6B7D;color:#fff;font-family:'Nunito Sans',sans-serif;padding:36px 20px 96px;display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <span style="display:flex;align-items:center;gap:10px">
+      <span style="position:relative;display:block;width:32px;height:32px;border-radius:8px;background:#F1ECE3;flex:none">
+        <span style="position:absolute;left:6px;bottom:6px;width:9px;height:13px;background:#E0812F;border-radius:2px 0 0 2px"></span>
+        <span style="position:absolute;left:15px;bottom:6px;width:10px;height:10px;background:#2D6B7D;border-radius:0 2px 2px 0"></span>
+        <span style="position:absolute;left:12px;top:5px;width:11px;height:11px;background:#fff;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.25)"></span>
+        <span style="position:absolute;left:16.25px;top:9.25px;width:2.5px;height:2.5px;border-radius:50%;background:#2D6B7D"></span>
+      </span>
+      <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:.06em;line-height:1">JOGO NA CAIXA</span>
+    </span>
+    <p style="margin:0;font-size:14px;line-height:1.6;color:rgba(255,255,255,.85)">Locadora de jogos de tabuleiro. Você escolhe no site, a gente combina tudo pelo WhatsApp.</p>
+  </div>
+  <div style="display:flex;gap:40px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65)">Navegar</span>
+      <a style="color:#fff;font-weight:600;font-size:14px;text-decoration:none">Acervo</a>
+      <a style="color:#fff;font-weight:600;font-size:14px;text-decoration:none">Como funciona</a>
+      <a style="color:#fff;font-weight:600;font-size:14px;text-decoration:none">Contato</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65)">Falar com a gente</span>
+      <a style="color:#fff;font-weight:600;font-size:14px;text-decoration:none">WhatsApp</a>
+      <a style="color:#fff;font-weight:600;font-size:14px;text-decoration:none">Instagram</a>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,.18);padding-top:16px;font-size:12px;color:rgba(255,255,255,.7);max-width:220px">© 2026 Jogo na Caixa</div>
+</footer>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;desktop&quot;,&quot;mobile&quot;],&quot;default&quot;:&quot;desktop&quot;,&quot;tsType&quot;:&quot;'desktop' | 'mobile'&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const v = this.props.variant || 'desktop';
+    return { isDesktop: v !== 'mobile', isMobile: v === 'mobile' };
+  }
+}
+</script>
+</body>
+</html>

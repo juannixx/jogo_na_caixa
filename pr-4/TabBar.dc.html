@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Nunito+Sans:ital,opsz,wght@0,6..12,400..800&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0;background:#F1ECE3}a{color:#2D6B7D}a:hover{color:#E0812F}</style>
+</helmet>
+<div style="position:relative;font-family:'Nunito Sans',sans-serif">
+  <a style="position:absolute;right:16px;bottom:calc(100% + {{ fabLift }}px);display:inline-flex;align-items:center;gap:9px;height:48px;padding:0 18px 0 14px;border-radius:999px;background:#3E8E5A;color:#fff;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 8px 20px rgba(62,142,90,.35);z-index:3">
+    <span style="position:relative;width:20px;height:16px;flex:none"><span style="position:absolute;inset:0;border:2px solid #fff;border-radius:8px"></span><span style="position:absolute;left:3px;bottom:-3px;width:6px;height:6px;background:#3E8E5A;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg)"></span></span>
+    WhatsApp
+  </a>
+  <nav style="background:#fff;border-top:1px solid rgba(45,107,125,.12);padding:8px 8px 0;display:grid;grid-template-columns:repeat(4,1fr)">
+    <a style="color:{{ cInicio }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:50px;text-decoration:none;font-weight:700;font-size:11px">
+      <span style="position:relative;display:block;width:22px;height:22px;border:2px solid currentColor;border-radius:6px"><span style="position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:currentColor"></span></span>
+      Início
+    </a>
+    <a style="color:{{ cAcervo }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:50px;text-decoration:none;font-weight:700;font-size:11px">
+      <span style="display:grid;grid-template-columns:1fr 1fr;gap:3px;width:22px;height:22px"><span style="background:currentColor;border-radius:3px"></span><span style="background:currentColor;border-radius:3px"></span><span style="background:currentColor;border-radius:3px"></span><span style="background:currentColor;border-radius:3px"></span></span>
+      Acervo
+    </a>
+    <a style="color:{{ cCarrinho }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:50px;text-decoration:none;font-weight:700;font-size:11px">
+      <span style="position:relative;display:block;width:22px;height:22px"><span style="position:absolute;left:0;right:0;top:6px;bottom:0;border:2px solid currentColor;border-radius:3px"></span><span style="position:absolute;left:-2px;right:-2px;top:1px;height:3px;background:currentColor;border-radius:1px"></span></span>
+      Carrinho
+    </a>
+    <a style="color:{{ cContato }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:50px;text-decoration:none;font-weight:700;font-size:11px">
+      <span style="position:relative;display:block;width:22px;height:18px;margin-top:2px"><span style="position:absolute;inset:0;border:2px solid currentColor;border-radius:9px"></span><span style="position:absolute;left:3px;bottom:-3px;width:7px;height:7px;background:#fff;border-left:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg)"></span></span>
+      Contato
+    </a>
+  </nav>
+  <div style="background:#fff;height:24px;display:flex;justify-content:center;align-items:flex-start;padding-top:8px"><span style="width:134px;height:5px;border-radius:999px;background:#1a1a1a"></span></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:180},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;inicio&quot;,&quot;acervo&quot;,&quot;carrinho&quot;,&quot;contato&quot;],&quot;default&quot;:&quot;inicio&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;fabLift&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:16,&quot;min&quot;:0,&quot;max&quot;:200,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props, a = p.active || 'inicio', c = k => (a === k ? '#E0812F' : '#2D6B7D');
+    const lift = Number(p.fabLift);
+    return { cInicio: c('inicio'), cAcervo: c('acervo'), cCarrinho: c('carrinho'), cContato: c('contato'), fabLift: Number.isFinite(lift) ? lift : 16 };
+  }
+}
+</script>
+</body>
+</html>
