@@ -1,52 +1,54 @@
 # Jogo na Caixa
 
-Site de aluguel de jogos de tabuleiro: catálogo público, reserva sem cadastro e fechamento pelo WhatsApp.
+🇧🇷 [Leia em português](./README.pt-BR.md)
 
-## Estado
+Board game rental website: public catalog, booking without creating an account, and checkout over WhatsApp.
 
-Concepção concluída. Design em alta fidelidade e plano de implementação prontos; a aplicação ainda não foi escrita.
+## Status
 
-## Documentação
+Discovery is done. High-fidelity design and the implementation plan are ready; the application itself has not been written yet.
 
-| Documento | Conteúdo |
+## Documentation (in Portuguese)
+
+| Document | Contents |
 |---|---|
-| [Design do sistema](docs/superpowers/specs/2026-09-14-jogo-na-caixa-design.md) | Arquitetura, modelo de dados, telas, decisões e escopo |
-| [Brief de design](docs/design/brief-claude-design.md) | Objetivo, marca, paleta, telas e componentes, autocontido para prototipação |
-| [Pesquisa de concorrente](docs/pesquisa/2026-09-14-acervo-de-jogos.md) | O que foi levantado no acervodejogos.com.br |
-| [Handoff de design](docs/design_handoff_jogo_na_caixa/README.md) | Tokens, componentes e telas em alta fidelidade |
-| [Plano: fundação e catálogo](docs/superpowers/plans/2026-09-14-fundacao-e-catalogo-publico.md) | 13 tarefas com testes, da fundação às três telas públicas |
+| [System design](docs/superpowers/specs/2026-09-14-jogo-na-caixa-design.md) | Architecture, data model, screens, decisions and scope |
+| [Design brief](docs/design/brief-claude-design.md) | Goal, brand, palette, screens and components, self-contained for prototyping |
+| [Competitor research](docs/pesquisa/2026-09-14-acervo-de-jogos.md) | Findings from acervodejogos.com.br |
+| [Design handoff](docs/design_handoff_jogo_na_caixa/README.md) | Tokens, components and high-fidelity screens |
+| [Plan: foundation and catalog](docs/superpowers/plans/2026-09-14-fundacao-e-catalogo-publico.md) | 13 test-driven tasks, from the foundation to the three public screens |
 
-## Preview do design
+## Design preview
 
-Os artboards são publicados no GitHub Pages a cada push:
+The artboards are published to GitHub Pages on every push:
 
-- `main`: https://juannixx.github.io/jogo_na_caixa/
-- pull request: `https://juannixx.github.io/jogo_na_caixa/pr-<número>/`, com a URL comentada automaticamente no PR
+- main: https://juannixx.github.io/jogo_na_caixa/
+- pull requests: `https://juannixx.github.io/jogo_na_caixa/pr-<number>/`, with the URL commented on the PR automatically
 
-O preview cobre Home, Acervo e Ficha do jogo, em desktop 1440 e mobile 390, mais a biblioteca de componentes. É o design, não a aplicação: quando o site existir, o preview da aplicação vem da Vercel, porque GitHub Pages só serve arquivos estáticos e o site usa renderização no servidor.
+The preview covers Home, Catalog and Game details, on desktop (1440) and mobile (390), plus the component library. It is the design, not the application: once the site exists, app previews will come from Vercel, since GitHub Pages only serves static files and the site uses server-side rendering.
 
-## Como o produto funciona
+## How the product works
 
-1. O cliente navega o acervo e adiciona até 3 jogos ao carrinho.
-2. Escolhe o período: 3 ou 7 dias.
-3. Reserva informando nome, WhatsApp e data de retirada. Sem criar conta.
-4. A reserva é registrada e o cliente vai ao WhatsApp com a mensagem pronta.
-5. Pagamento por PIX e logística são combinados na conversa, fora do sistema.
+1. The customer browses the catalog and adds up to 3 games to the cart.
+2. Chooses the rental period: 3 or 7 days.
+3. Books with name, WhatsApp number and pickup date. No account needed.
+4. The booking is saved and the customer is sent to WhatsApp with a prefilled message.
+5. Payment (PIX) and logistics are handled in the chat, outside the system.
 
-## Stack prevista
+## Planned stack
 
-Next.js 15 (App Router, TypeScript, Tailwind) e Supabase (Postgres, Storage, Auth do painel). Deploy na Vercel.
+Next.js 15 (App Router, TypeScript, Tailwind) and Supabase (Postgres, Storage, Auth for the admin panel). Deployed on Vercel.
 
-## Contribuição
+## Contributing
 
-Nada entra direto na `main`. Toda mudança passa por branch e pull request.
+Nothing goes straight to `main`. Every change goes through a branch and a pull request.
 
 ```bash
-git switch -c docs/minha-mudanca
-# edite
-git commit -am "docs: descricao da mudanca"
-git push -u origin docs/minha-mudanca
+git switch -c docs/my-change
+# edit
+git commit -am "docs: describe the change"
+git push -u origin docs/my-change
 gh pr create
 ```
 
-A CI valida os links internos da documentação a cada pull request. Quando a aplicação existir, a mesma CI passa a rodar lint, testes e build automaticamente.
+CI validates internal documentation links on every pull request. Once the application exists, the same CI will also run lint, tests and build.
